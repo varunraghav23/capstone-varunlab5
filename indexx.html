@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Learnify — Online Learning</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg: #f7fbff;
+      --card: #ffffff;
+      --muted: #6b7280;
+      --accent: #2563eb;
+      --accent-2: #7c3aed;
+      --radius: 12px;
+      --gap: 1.25rem;
+      --container: 1100px;
+      font-size: 16px;
+      font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+
+    /* Base resets */
+    * {box-sizing: border-box;}
+    html,body{height:100%;margin:0;background:var(--bg);color:#111;}
+    .container{max-width:var(--container);margin:0 auto;padding:1rem;}
+    .visually-hidden{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap}
+
+    /* Skip link */
+    .skip-link{position:absolute;left:1rem;top:0;transform:translateY(-120%);background:#111;color:#fff;padding:.4rem .6rem;border-radius:4px;z-index:100}
+    .skip-link:focus{transform:translateY(.5rem)}
+
+    /* Header */
+    .site-header{background:#fff;box-shadow:0 1px 4px rgba(2,6,23,0.06);position:sticky;top:0;z-index:50}
+    .header-inner{display:flex;align-items:center;gap:1rem;justify-content:space-between;padding:.8rem 0;}
+    .brand{display:flex;align-items:center;gap:.6rem}
+    .logo{width:36px;height:36px}
+    .brand-name{font-weight:700;color:var(--accent)}
+    .primary-nav ul{list-style:none;margin:0;padding:0;display:flex;gap:1rem}
+    .primary-nav a{color:var(--muted);text-decoration:none;padding:.4rem .6rem;border-radius:8px}
+    .primary-nav a:hover{background:rgba(37,99,235,0.06);color:var(--accent)}
+
+    /* Buttons */
+    .btn{display:inline-block;padding:.45rem .9rem;border-radius:10px;background:transparent;border:1px solid transparent;text-decoration:none;font-weight:600}
+    .btn-sm{padding:.3rem .6rem;font-size:.9rem}
+    .btn-primary{background:var(--accent);color:#fff}
+    .btn-ghost{background:transparent;border:1px solid #e6eefc;color:var(--accent)}
+    .btn-cta{background:var(--accent-2);color:#fff;padding:.6rem 1.1rem;border-radius:14px}
+
+    /* Hero */
+    .hero{padding:2.2rem 0;background:linear-gradient(180deg,#ecf3ff 0%, #fff 100%);overflow:hidden}
+    .hero-inner{display:grid;grid-template-columns:1fr 420px;align-items:center;gap:2rem}
+    .hero-text h1{font-size:2rem;margin:.2rem 0 1rem}
+    .hero-text p{color:var(--muted);margin:0 0 1rem}
+    .hero-search{display:flex;gap:.5rem}
+    .hero-search input{flex:1;padding:.6rem .8rem;border-radius:999px;border:1px solid #e6eefc}
+    .hero-image img{max-width:100%;border-radius:18px;display:block;}
+
+    /* categories */
+    .categories{padding:1.5rem 0}
+    .category-list{display:flex;flex-wrap:wrap;gap:.75rem;padding:0;margin:0;list-style:none}
+    .category-item{background:var(--card);padding:.6rem .9rem;border-radius:14px;box-shadow:0 2px 8px rgba(2,6,23,0.04)}
+
+    /* Course grid */
+    .section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+    .course-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+    .course-card{background:var(--card);border-radius:14px;overflow:hidden;box-shadow:0 6px 18px rgba(16,24,40,0.06);display:flex;flex-direction:column}
+    .course-thumb{width:100%;height:160px;object-fit:cover;display:block}
+    .course-body{padding:0.9rem;display:flex;flex-direction:column;gap:.6rem;flex:1}
+    .course-title{margin:0;font-size:1.05rem}
+    .course-meta{color:var(--muted);font-size:.9rem;margin:0}
+    .course-footer{display:flex;align-items:center;justify-content:space-between;margin-top:auto}
+    .price{font-weight:700;color:var(--accent)}
+
+    /* Testimonials */
+    .testimonials{padding:1.5rem 0}
+    .test-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+    .testimonial{background:var(--card);padding:1rem;border-radius:12px;box-shadow:0 3px 12px rgba(2,6,23,0.04)}
+
+    /* Pricing */
+    .pricing-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+    .plan{background:var(--card);padding:1rem;border-radius:12px;box-shadow:0 6px 18px rgba(2,6,23,0.04);text-align:center}
+    .price-big{font-size:1.25rem;font-weight:700;color:var(--accent)}
+
+    /* Contact form */
+    .contact-form{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    .contact-form .form-row{display:flex;flex-direction:column}
+    .contact-form label{font-size:.9rem;margin-bottom:.25rem}
+    .contact-form input, .contact-form textarea, .contact-form select{padding:.6rem;border-radius:8px;border:1px solid #e8f0ff}
+
+    /* Footer */
+    .site-footer{background:#fff;padding:1rem 0;border-top:1px solid #eef2ff}
+    .footer-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+
+    /* Small utilities */
+    @keyframes heroFade { from {opacity:0; transform:translateY(8px)} to {opacity:1; transform:none} }
+    .hero-inner > * { animation: heroFade .6s ease both }
+
+    /* Responsive breakpoints */
+    /* Tablet ~768px */
+    @media (max-width: 1023px) {
+      .course-grid{grid-template-columns:repeat(2,1fr)}
+      .hero-inner{grid-template-columns:1fr 320px}
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      :root{font-size:15px}
+      .header-inner{flex-direction:column;align-items:flex-start;gap:.5rem}
+      .primary-nav{order:3;width:100%}
+      .primary-nav ul{flex-wrap:wrap}
+      .hero-inner{grid-template-columns:1fr;gap:1rem}
+      .hero-image{order:2}
+      .hero-text{order:1}
+      .course-grid{grid-template-columns:1fr}
+      .test-grid{grid-template-columns:1fr}
+      .pricing-grid{grid-template-columns:1fr}
+      .contact-form{grid-template-columns:1fr}
+      .category-list{justify-content:flex-start}
+      .site-footer .footer-inner{flex-direction:column;align-items:flex-start}
+    }
+
+    /* Desktop larger screens */
+    @media (min-width: 1024px) {
+      :root{font-size:16px}
+      .course-grid{grid-template-columns:repeat(3,1fr)}
+    }
+
+    /* subtle hover effects */
+    .course-card:hover{transform:translateY(-6px);transition:transform .24s ease, box-shadow .24s ease}
+    .btn, .course-card, .plan{transition:all .22s ease}
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <div class="brand">
+        <img src="https://imgs.search.brave.com/3rPKE5FkUyQxq5Gbth4-gHokLOoka0UhOhV_z1JFaoU/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/cHJlbWl1bS12ZWN0/b3Ivb25saW5lLWxl/YXJuLWxvZ28tZGVz/aWducy1jb25jZXB0/LXZlY3Rvci1jbG91/ZC1ib29rLWxvZ28t/dGVtcGxhdGVfNzY0/OS0yNzkzLmpwZz9z/ZW10PWFpc19oeWJy/aWQmdz03NDAmcT04/MA" alt="Learnify logo" class="logo">
+        <span class="brand-name">Learnify</span>
+      </div>
+
+      <nav class="primary-nav" aria-label="Primary navigation">
+        <ul>
+          <li><a href="#courses">Courses</a></li>
+          <li><a href="#categories">Categories</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <a class="btn btn-ghost" href="#login">Login</a>
+        <a class="btn btn-primary" href="#signup">Sign Up</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="site-main">
+    <!-- Hero -->
+    <section class="hero" aria-label="Hero banner">
+      <div class="container hero-inner">
+        <div class="hero-text">
+          <h1>Unlock Your Potential with Online Learning</h1>
+          <p>Join thousands of learners — access top-rated courses from expert instructors. Learn anytime, anywhere.</p>
+          <form class="hero-search" role="search" aria-label="Search courses">
+            <label for="search" class="visually-hidden">Search courses</label>
+            <input id="search" name="search" type="search" placeholder="What do you want to learn?" required>
+            <button type="submit" class="btn btn-cta">Find Courses</button>
+          </form>
+        </div>
+        <div class="hero-image" aria-hidden="true">
+          <img src="https://imgs.search.brave.com/UBDiq6B7TtXRS0g7Domcg1pCa8pU3CFnZHEhSMt6Lfg/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9jZG5p/Lmljb25zY291dC5j/b20vaWxsdXN0cmF0/aW9uL3ByZW1pdW0v/dGh1bWIvYm95LWxl/YXJuaW5nLW9ubGlu/ZS1pbGx1c3RyYXRp/b24tc3ZnLWRvd25s/b2FkLXBuZy0yMjk0/MjIyLnBuZw" alt="Illustration of online learning">
+        </div>
+      </div>
+    </section>
+
+    <!-- Categories -->
+    <section id="categories" class="categories container" aria-label="Popular categories">
+      <h2>Popular Categories</h2>
+      <ul class="category-list">
+        <li class="category-item">Development</li>
+        <li class="category-item">Design</li>
+        <li class="category-item">Business</li>
+        <li class="category-item">Languages</li>
+        <li class="category-item">Music</li>
+        <li class="category-item">Science</li>
+      </ul>
+    </section>
+
+    <!-- Featured courses -->
+    <section id="courses" class="courses container" aria-label="Featured courses">
+      <div class="section-head">
+        <h2>Featured Courses</h2>
+        <div class="filters">
+          <label for="level">Level</label>
+          <select id="level" name="level" aria-label="Filter by level">
+            <option>All</option>
+            <option>Beginner</option>
+            <option>Intermediate</option>
+            <option>Advanced</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="course-grid" role="list">
+        <!-- course card 1 -->
+        <article class="course-card" role="listitem">
+          <img src="https://imgs.search.brave.com/7XJ0Oj3UIAGlJTpec8x6Elk-REMTJ12S1QMTS6fngk8/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jYW1w/dXMudzNzY2hvb2xz/LmNvbS9jZG4vc2hv/cC9maWxlcy9yZWFj/dF8yMDZ4MjA2LnBu/Zy0yX2Q2YTIyZjVi/LTlmZDMtNDk2ZS04/YWQ3LWMyNDhlMTdi/YmU3Ml80NzJ4NDcy/LnBuZz92PTE3NjM3/MzQzNTI" alt="Course: Modern Web Development" class="course-thumb">
+          <div class="course-body">
+            <h3 class="course-title">Modern Web Development Bootcamp</h3>
+            <p class="course-meta">By Jane Doe · 12h · Beginner</p>
+            <div class="course-footer">
+              <span class="price">₹499</span>
+              <a class="btn btn-sm" href="#course-details">View</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- duplicate cards for demo -->
+        <article class="course-card" role="listitem">
+          <img src="https://imgs.search.brave.com/SOhI9ZIGW5vtx2IS3c4MhMaWXymn0Q_xIseTyttvhF4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9nZngt/aHViLmNvL3VwbG9h/ZHMvcG9zdHMvMjAy/NS0wMS9ncmFwaGlj/LWRlc2lnbi1tYXN0/ZXJjbGFzcy1sZWFy/bi1ncmVhdC1kZXNp/Z24ud2VicA" alt="Course: Graphic Design Masterclass" class="course-thumb">
+          <div class="course-body">
+            <h3 class="course-title">Graphic Design Masterclass</h3>
+            <p class="course-meta">By A. Smith · 8h · Intermediate</p>
+            <div class="course-footer">
+              <span class="price">₹699</span>
+              <a class="btn btn-sm" href="#course-details">View</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="course-card" role="listitem">
+          <img src="https://imgs.search.brave.com/Lr0c_aIq8NarpIgl-qjYUMKR03_pfyFo-6y6nNl5jec/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9ydWtt/aW5pbTIuZmxpeGNh/cnQuY29tL2ltYWdl/LzQxNi80MTYvanB1/MzI0dzAvYm9vay8w/LzMvMi9mdW5kYW1l/bnRhbHMtb2YtYnVz/aW5lc3MtYW5hbHl0/aWNzLW9yaWdpbmFs/LWltYWZienprdWR1/bnp6cWsuanBlZz9x/PTcwJmNyb3A9ZmFs/c2U" alt="Course: Business Analytics Fundamentals" class="course-thumb">
+          <div class="course-body">
+            <h3 class="course-title">Business Analytics Fundamentals</h3>
+            <p class="course-meta">By R. Kumar · 10h · Advanced</p>
+            <div class="course-footer">
+              <span class="price">₹999</span>
+              <a class="btn btn-sm" href="#course-details">View</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="testimonials container" aria-label="Student testimonials">
+      <h2>What Our Students Say</h2>
+      <div class="test-grid">
+        <blockquote class="testimonial">
+          <p>"Great courses and mentors — I learned web dev in 3 months!"</p>
+          <footer>— Aman, Student</footer>
+        </blockquote>
+        <blockquote class="testimonial">
+          <p>"The design course improved my portfolio drastically."</p>
+          <footer>— Varun, Designer</footer>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing" class="pricing container" aria-label="Pricing plans">
+      <h2>Pricing</h2>
+      <div class="pricing-grid">
+        <article class="plan">
+          <h3>Basic</h3>
+          <p class="price-big">Free</p>
+          <ul>
+            <li>Limited courses</li>
+            <li>Community support</li>
+          </ul>
+          <a class="btn" href="#signup">Get Started</a>
+        </article>
+        <article class="plan">
+          <h3>Pro</h3>
+          <p class="price-big">₹999 / month</p>
+          <ul>
+            <li>All courses</li>
+            <li>Certificate</li>
+          </ul>
+          <a class="btn btn-primary" href="#signup">Start Trial</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- Contact / Signup -->
+    <aside id="contact" class="contact container" aria-label="Contact form">
+      <h2>Contact / Sign Up</h2>
+      <form class="contact-form" aria-label="Contact form">
+        <div class="form-row">
+          <label for="name">Full name</label>
+          <input id="name" name="name" type="text" placeholder="Your name" required>
+        </div>
+        <div class="form-row">
+          <label for="email">Email address</label>
+          <input id="email" name="email" type="email" placeholder="you@example.com" required>
+        </div>
+        <div class="form-row" style="grid-column: 1 / -1;">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="4" placeholder="Questions?"></textarea>
+        </div>
+        <div style="grid-column: 1 / -1;">
+          <button class="btn btn-primary" type="submit">Send</button>
+        </div>
+      </form>
+    </aside>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <p>&copy; <span id="year"></span> Learnify. All rights reserved.</p>
+      <nav aria-label="Footer social links" class="social">
+        <!-- add inline SVG icons or images -->
+        <a href="#" aria-label="Twitter" class="social-link">Twitter</a>
+        <a href="#" aria-label="Facebook" class="social-link">Facebook</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    // small helper
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
